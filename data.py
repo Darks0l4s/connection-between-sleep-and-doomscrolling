@@ -102,7 +102,7 @@ def doomscrolling_sleep():
     plt.bar(x=signs, height=model.coef_)
     
     plt.show()
-    plt.cla()
+    plt.clf()
 
 def user_analytics():
     plt.figure(figsize=(20,15))
@@ -124,7 +124,7 @@ def user_analytics():
     plt.xlabel('People count')
     plt.ylabel('Country')
     plt.show()
-    plt.cla()
+    plt.clf()
 
 def load_data():
     try:

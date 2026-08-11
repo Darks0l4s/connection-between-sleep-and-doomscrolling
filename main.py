@@ -1,7 +1,7 @@
-import data
+import gui
 
 def main():
-    print(data.load_data())
+    gui.setup()
 
 if __name__=='__main__':
     main()
