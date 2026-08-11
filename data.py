@@ -5,6 +5,10 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
+
+def close():
+    plt.close('all')
+
 def doomscrolling_sleep():
     plt.figure(figsize=(20,15))
 
@@ -103,6 +107,7 @@ def doomscrolling_sleep():
     
     plt.show()
     plt.clf()
+    close()
 
 def user_analytics():
     plt.figure(figsize=(20,15))
@@ -125,6 +130,7 @@ def user_analytics():
     plt.ylabel('Country')
     plt.show()
     plt.clf()
+    close()
 
 def load_data():
     try:
@@ -140,20 +146,6 @@ def load_data():
         )
         print('Successful')
         print(df.head(5))
-    return df
 
-def menu():
-    print('=====MENU=====')
-    print('0. Exit\n'
-        '1. User analytics\n'
-        '2. The connection between doomscrolling and sleep'
-    '')
-    command=int(input('Please enter: '))
-    if command==0:
-        exit()
-    elif command==1:
-        user_analytics()
-    elif command==2:
-        doomscrolling_sleep()
-    else:
-        print('Unknown command')
+def return_data(columns_count):
+    return df.dropna().head(columns_count)

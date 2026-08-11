@@ -1,3 +1,3 @@
 #!/bin/bash
 source ~/ml/ml_venv/bin/activate
-python3 ~/ml/Sleep/main.py
+streamlit run /home/darks/ml/Sleep/main.py --server.headless true
