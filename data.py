@@ -5,13 +5,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-
-def close():
-    plt.close('all')
-
 def doomscrolling_sleep():
-    plt.figure(figsize=(20,15))
-
     signs = ['total_doomscroll_minutes',
     'bedtime_screen_time_minutes',
     'total_daily_screen_time_hours',
@@ -107,30 +101,7 @@ def doomscrolling_sleep():
     
     plt.show()
     plt.clf()
-    close()
 
-def user_analytics():
-    plt.figure(figsize=(20,15))
-
-    plt.subplot(2,2, 1)
-    plt.title('Gender of People')
-    plt.pie(df['gender'].value_counts(), labels=df['gender'].unique(), autopct='%1.1f%%')
-    plt.legend(loc='upper left', bbox_to_anchor=(-0.3, 1))
-
-    plt.subplot(2,2, (2,4))
-    plt.title('People age')
-    plt.bar(x=df['age'].unique(), height=df['age'].value_counts())
-    plt.xlabel('Age')
-    plt.ylabel('Count people')
-
-    plt.subplot(2,2, 3)
-    plt.title('People live country')
-    plt.barh(y=df['country_region'].unique(), width=df['country_region'].value_counts())
-    plt.xlabel('People count')
-    plt.ylabel('Country')
-    plt.show()
-    plt.clf()
-    close()
 
 def load_data():
     try:
