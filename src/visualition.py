@@ -30,3 +30,10 @@ class Graph:
 
         fig.tight_layout()
         return fig
+
+    def predict_sleep(self, coef: list, coef_name: list) -> matfig.Figure:
+        coef = coef.flatten()
+        fig, axes = plt.subplots(1,1, figsize=(20,20))
+        axes.barh(coef_name, coef)
+        axes.invert_yaxis()  
+        return fig

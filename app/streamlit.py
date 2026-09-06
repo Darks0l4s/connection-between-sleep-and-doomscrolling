@@ -10,3 +10,6 @@ class WindowApp:
 
     def print_df(self, df: DataFrame):
         st.dataframe(df, use_container_width=True)
+
+    def print_text(self, text: str):
+        st.text(text)
