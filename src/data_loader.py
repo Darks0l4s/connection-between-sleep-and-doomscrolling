@@ -35,3 +35,4 @@ class Loader:
         return self.df_not_nan[category]
 
     
+    

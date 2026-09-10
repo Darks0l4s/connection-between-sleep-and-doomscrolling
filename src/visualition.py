@@ -37,3 +37,27 @@ class Graph:
         axes.barh(coef_name, coef)
         axes.invert_yaxis()  
         return fig
+
+    def show_dependence_parameter(self, parameters: pd.DataFrame, target: pd.DataFrame) -> matfig.Figure:
+        from math import ceil
+        feature_count = parameters.shape[1]
+        size = ceil(feature_count**(0.5))
+        fig, axes = plt.subplots(size,size, figsize=(20,20))
+        i=0
+        axes= axes.flatten()
+        for feature_name, feature_data in parameters.items():
+            axes[i].scatter(feature_data, target)
+            axes[i].set_xlabel(feature_name)
+            axes[i].set_ylabel(target.columns[0])
+            i+=1
+        return fig
+
+    def coincidence_values(self, y_predict: pd.DataFrame, y_real: pd.DataFrame) -> matfig.Figure:
+        from numpy import linspace
+        fig, axes = plt.subplots(figsize=(15,15))
+        axes.scatter(y_real, y_predict)
+        axes.set_xlabel('Real data')
+        axes.set_ylabel('Predict data')
+        y_linear= linspace(6, 10, 10)
+        axes.plot(y_linear, y_linear, color='red')
+        return fig
