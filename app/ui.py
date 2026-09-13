@@ -1,6 +1,6 @@
 import streamlit as st
 from pandas import DataFrame
-from src.visualition import Graph
+from src.visualization import Graph
 from src.models import LinearML
 from matplotlib.figure import Figure
 class WindowApp:
@@ -16,7 +16,7 @@ class WindowApp:
 
     def print_text(self, text: str):
         st.text(text)
-
+    def render_regression_tab
     def render_model_selection(self, signs: DataFrame, target: DataFrame, model: LinearML, graph: Graph):
 
         st.title('Regression')
@@ -31,44 +31,64 @@ class WindowApp:
         with tab_linear:
             self.print_text('Linear Regression')
             signs_column, k, b, mae, mse, r2 = model.train_linear(signs, target, mode='linear')
-            self.print_graph(graph.predict_sleep(k, signs_column))
+            self.print_graph(graph.coef_visual(k, signs_column))
             text = f'MAE={mae}, MSE={mse}, R2_score={r2}'
             self.print_text(text)
             self.print_graph(graph.coincidence_values(model.y_real, model.y_predict))
         with tab_ridge:
             self.print_text('Ridge Regression')
             signs_column, k, b, mae, mse, r2 = model.train_linear(signs, target, mode='linear')
-            self.print_graph(graph.predict_sleep(k, signs_column))
+            self.print_graph(graph.coef_visual(k, signs_column))
             text = f'MAE={mae}, MSE={mse}, R2_score={r2}'
             self.print_text(text)
             self.print_graph(graph.coincidence_values(model.y_real, model.y_predict))
         with tab_lasso:
             self.print_text('Lasso Regression')
             signs_column, k, b, mae, mse, r2 = model.train_linear(signs, target, mode='linear')
-            self.print_graph(graph.predict_sleep(k, signs_column))
+            self.print_graph(graph.coef_visual(k, signs_column))
             text = f'MAE={mae}, MSE={mse}, R2_score={r2}'
             self.print_text(text)
             self.print_graph(graph.coincidence_values(model.y_real, model.y_predict))
         with tab_random:
             self.print_text('Random Forest')
             signs_column, k, b, mae, mse, r2 = model.train_linear(signs, target, mode='linear')
-            self.print_graph(graph.predict_sleep(k, signs_column))
+            self.print_graph(graph.coef_visual(k, signs_column))
             text = f'MAE={mae}, MSE={mse}, R2_score={r2}'
             self.print_text(text)
             self.print_graph(graph.coincidence_values(model.y_real, model.y_predict))
         with tab_gradient:
             self.print_text('Gradient Boosting')
             signs_column, k, b, mae, mse, r2 = model.train_linear(signs, target, mode='linear')
-            self.print_graph(graph.predict_sleep(k, signs_column))
+            self.print_graph(graph.coef_visual(k, signs_column))
             text = f'MAE={mae}, MSE={mse}, R2_score={r2}'
             self.print_text(text)
             self.print_graph(graph.coincidence_values(model.y_real, model.y_predict))
 
     def render_classifier(self, signs: DataFrame, target: DataFrame, model: LinearML, graph: Graph):
         st.title('Classifier')
-        importances, accuracy, report, matrix = model.train_classifier(signs, target)
-        st.metric("Общая точность (Accuracy)", f"{accuracy * 100:.2f}%")
-
-        st.write("📊 Детальный отчет по классам:")
-        st.dataframe(report)
-        st.pyplot(graph.predict_sleep(importances, signs.columns))
+        tab_logistic, tab_random, tab_histgradient = st.tabs([
+                "LogisticRegression", 
+                "RandomForestClassifier", 
+                "HistGradientBoostingClassifier"
+            ])
+        with tab_logistic:
+            importances, accuracy, report, matrix = model.train_classifier(signs, target, 'logistic')
+            st.metric("Accuracy", f"{accuracy * 100:.2f}%")
+            st.write("📊 Detailed report by class:")
+            st.dataframe(report)
+            st.pyplot(graph.coef_visual(importances, signs.columns))
+            self.print_graph(graph.heatmap(matrix))
+        with tab_random:
+            importances, accuracy, report, matrix = model.train_classifier(signs, target, 'random')
+            st.metric("Accuracy", f"{accuracy * 100:.2f}%")
+            st.write("📊 Detailed report by class:")
+            st.dataframe(report)
+            st.pyplot(graph.coef_visual(importances, signs.columns))
+            self.print_graph(graph.heatmap(matrix))
+        with tab_histgradient:
+            importances, accuracy, report, matrix = model.train_classifier(signs, target, 'histgradient')
+            st.metric("Accuracy", f"{accuracy * 100:.2f}%")
+            st.write("📊 Detailed report by class:")
+            st.dataframe(report)
+            st.pyplot(graph.coef_visual(importances, signs.columns))
+            self.print_graph(graph.heatmap(matrix))

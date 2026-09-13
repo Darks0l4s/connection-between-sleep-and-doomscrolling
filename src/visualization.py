@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
+from numpy import ndarray
 import pandas as pd
 import matplotlib.figure as matfig
-
+import seaborn as sns
 class Graph:
     def __init__(self):
         pass
@@ -31,8 +32,9 @@ class Graph:
         fig.tight_layout()
         return fig
 
-    def predict_sleep(self, coef: list, coef_name: list) -> matfig.Figure:
-        coef = coef.flatten()
+    def coef_visual(self, coef: ndarray, coef_name: list) -> matfig.Figure:
+        from numpy import array
+        coef = array(coef).flatten()
         fig, axes = plt.subplots(1,1, figsize=(20,20))
         axes.barh(coef_name, coef)
         axes.invert_yaxis()  
@@ -61,3 +63,22 @@ class Graph:
         y_linear= linspace(6, 10, 10)
         axes.plot(y_linear, y_linear, color='red')
         return fig
+
+    def heatmap(self, matrix: ndarray):
+        fig, axes = plt.subplots(figsize=(10,10))
+        sns.heatmap(
+            matrix,
+            annot=True,
+            fmt='d',
+            cmap='Purples',
+            xticklabels=['Not doomscroller', 'Ddomscroller'],
+            yticklabels=['Not doomscroller', 'Ddomscroller'],
+            ax=axes,
+            cbar=False
+        )
+        axes.set_title("Matrix error", fontsize=14, pad=15)
+        axes.set_xlabel("Predict model", fontsize=12, labelpad=10)
+        axes.set_ylabel("real data", fontsize=12, labelpad=10)
+    
+        fig.tight_layout()
+        return fig  
