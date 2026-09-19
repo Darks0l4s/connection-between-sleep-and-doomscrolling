@@ -14,6 +14,7 @@ def regression_analytics(app: WindowApp, loader: dl.Loader, graph: Graph, model:
     ]   
     signs = loader.load_specific_data(features)
     target = loader.load_specific_data(['sleep_hours_per_night'])
+    signs = loader.encode_categorical(signs)
     app.render_model_selection(signs, target, model, graph)
 
 def classifier_analytics(app: WindowApp, loader: dl.Loader, graph: Graph, model: LinearML):
@@ -23,7 +24,7 @@ def classifier_analytics(app: WindowApp, loader: dl.Loader, graph: Graph, model:
         'phone_checks_per_night', 'keeps_phone_in_bedroom'
     ]
     signs = loader.load_specific_data(feature)
-    signs = loader.string_in_int(signs)
+    signs = loader.encode_categorical(signs)
     target = loader.load_specific_data(['doomscroller'])
     app.render_classifier(signs, target, model, graph)
 

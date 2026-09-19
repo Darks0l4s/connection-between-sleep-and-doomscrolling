@@ -6,7 +6,7 @@ class Loader:
         self.df = pd.DataFrame()
         self.df_not_nan =pd.DataFrame()
 
-    def string_in_int(self, old_df: pd.DataFrame) -> pd.DataFrame:
+    def encode_categorical(self, old_df: pd.DataFrame) -> pd.DataFrame:
         return pd.get_dummies(old_df, drop_first=True)
 
     def delete_nan(self, df: pd.DataFrame) -> pd.DataFrame:

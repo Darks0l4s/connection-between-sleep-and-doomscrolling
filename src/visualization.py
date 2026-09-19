@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from numpy import ndarray
+import numpy as np
 import pandas as pd
 import matplotlib.figure as matfig
 import seaborn as sns
@@ -32,7 +32,7 @@ class Graph:
         fig.tight_layout()
         return fig
 
-    def coef_visual(self, coef: ndarray, coef_name: list) -> matfig.Figure:
+    def coef_visual(self, coef: np.ndarray, coef_name: list) -> matfig.Figure:
         from numpy import array
         coef = array(coef).flatten()
         fig, axes = plt.subplots(1,1, figsize=(20,20))
@@ -60,25 +60,27 @@ class Graph:
         axes.scatter(y_real, y_predict)
         axes.set_xlabel('Real data')
         axes.set_ylabel('Predict data')
-        y_linear= linspace(6, 10, 10)
+        y_min = np.minimum(y_real.min(), y_predict.min())
+        y_max=np.maximum(y_real.max(), y_predict.max())
+        y_linear= linspace(y_min, y_max, 10)
         axes.plot(y_linear, y_linear, color='red')
         return fig
 
-    def heatmap(self, matrix: ndarray):
+    def heatmap(self, matrix: np.ndarray):
         fig, axes = plt.subplots(figsize=(10,10))
         sns.heatmap(
             matrix,
             annot=True,
             fmt='d',
             cmap='Purples',
-            xticklabels=['Not doomscroller', 'Ddomscroller'],
-            yticklabels=['Not doomscroller', 'Ddomscroller'],
+            xticklabels=['Not doomscroller', 'Doomscroller'],
+            yticklabels=['Not doomscroller', 'Doomscroller'],
             ax=axes,
             cbar=False
         )
         axes.set_title("Matrix error", fontsize=14, pad=15)
         axes.set_xlabel("Predict model", fontsize=12, labelpad=10)
-        axes.set_ylabel("real data", fontsize=12, labelpad=10)
+        axes.set_ylabel("Real data", fontsize=12, labelpad=10)
     
         fig.tight_layout()
-        return fig  
+        return fig 
