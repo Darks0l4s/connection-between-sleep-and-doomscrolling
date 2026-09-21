@@ -1,3 +1,4 @@
 #!/bin/bash
+rm -rf models
 source ~/ml/ml_venv/bin/activate
-streamlit run /home/darks/ml/Sleep/main.py --server.headless true
+streamlit run main.py --server.headless true

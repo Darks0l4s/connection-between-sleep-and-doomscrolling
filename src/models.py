@@ -3,15 +3,52 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, R
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score, accuracy_score, classification_report, confusion_matrix
-from pandas import DataFrame, get_dummies
+from sklearn.inspection import permutation_importance
+import pandas as pd
 from numpy import ndarray
+import numpy as np
+from typing import NamedTuple
+import joblib
+import os
 
-class LinearML:
+class RegressionResults(NamedTuple):
+    signs_column: pd.Index
+    k: ndarray
+    b: float
+    mae: float
+    mse: float
+    r2: float
+    y_predict: float
+    y_real: float
+
+class ClassiferResults(NamedTuple):
+    importances: ndarray
+    accuracy: float
+    report: dict
+    matrix:ndarray
+
+class ModelTrainer:
+    
     def __init__(self):
         pass
 
-    def train_linear(self, signs: DataFrame, target: DataFrame, mode ='linear') -> tuple[DataFrame, ndarray, ndarray, float, float, float]:
+    def cash_model(self, trained_models, dataset_type, mode_name):
+        folder='models'
+        os.makedirs(folder, exist_ok=True)
+        file_path = os.path.join(folder, f'{dataset_type}-{mode_name}-model.pkl')
+        joblib.dump(trained_models, file_path)
 
+    def cash_results(self, res, dataset_type, mode_name):
+        folder='models'
+        os.makedirs(folder, exist_ok=True)
+        file_path = os.path.join(folder, f'{dataset_type}-{mode_name}-res.pkl')
+        joblib.dump(res, file_path)
+
+    def train_linear(self, signs: pd.DataFrame, target: ndarray, mode: str) -> RegressionResults:
+        if hasattr(target, 'values'):
+            target = target.values.ravel()
+        else:
+            target = np.array(target).ravel()
         match mode:
             case 'linear':
                 model=LinearRegression()
@@ -25,12 +62,13 @@ class LinearML:
                 model = GradientBoostingRegressor(n_estimators=100, learning_rate=0.05, max_depth=3, random_state=42)
             case _:
                 model = LinearRegression()
-        signs = get_dummies(signs, drop_first=True)
+        signs = pd.get_dummies(signs, drop_first=True)
         signs_column = signs.columns
         signs = self.scale_coef(signs)
         X_train, X_test, y_train, y_test = train_test_split(
             signs, target,
-            test_size=0.1
+            test_size=0.1,
+            random_state=42
         )
         model.fit(X_train, y_train)
         y_pred=model.predict(X_test)
@@ -43,32 +81,45 @@ class LinearML:
         mae = mean_absolute_error(y_test, y_pred)
         mse = mean_squared_error(y_test, y_pred)
         r2 = r2_score(y_test, y_pred)
-        self.y_predict = model.predict(X_train)
-        self.y_real = y_train
-        return signs_column, k, b, mae, mse, r2
-
-    def train_classifier(self, signs: DataFrame, target: DataFrame, mode='logistic'):
+        y_predict = model.predict(X_train)
+        y_real = y_train
+        res = RegressionResults(
+            signs_column=signs_column,
+            k=k, b=b,
+            mae=mae, mse=mse, r2=r2,
+            y_predict=y_predict, y_real=y_real
+        )
+        self.cash_model(model, 'regression', mode)
+        self.cash_results(res, 'regression', mode)
+        return res
+    
+    def train_classifier(self, signs: pd.DataFrame, target: ndarray, mode: str) -> ClassiferResults:
+        if hasattr(target, 'values'):
+            target = target.values.ravel()
         match mode:
             case 'logistic':
-                model = LogisticRegression(max_iter=1000)
+                model = LogisticRegression(max_iter=1000, random_state=42)
             case 'random':
                 model=RandomForestClassifier(
                     n_estimators=100,
                     max_depth=5,
                     min_samples_split=5,
-                    n_jobs=-1
+                    n_jobs=-1,
+                    random_state=42
                 )
             case 'histgradient':
                 model=HistGradientBoostingClassifier(
+                    
                     max_iter=100,
                     learning_rate=0.05,
                     max_depth=3,
-                    l2_regularization=0.1
+                    l2_regularization=0.1,
+                    random_state=42
                 )
             case _:
                 model = LogisticRegression(max_iter=1000)
         X_train, X_test, y_train, y_test = train_test_split(
-            signs, target, test_size=0.2, stratify=target
+            signs, target, test_size=0.2, stratify=target, random_state=42
         )
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
@@ -80,10 +131,15 @@ class LinearML:
         elif hasattr(model, 'feature_importances_'):
             importances = model.feature_importances_
         else:
-            importances = [0] * len(signs.columns) 
-        return importances, accuracy, report, matrix
+            result= permutation_importance(model, X_test, y_test, n_repeats=10,random_state=42)
+            importances = result.importances_mean
+        res = ClassiferResults(
+        importances=importances, accuracy=accuracy, report=report, matrix=matrix)
+        self.cash_results(res, 'classifier', mode)
+        self.cash_model(model, 'classifier', mode)
+        return res
     
-    def scale_coef(self, X: DataFrame) -> DataFrame:
+    def scale_coef(self, X: pd.DataFrame) -> pd.DataFrame:
         scaler = StandardScaler()
         x_scaled = scaler.fit_transform(X)
         return x_scaled

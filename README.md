@@ -11,11 +11,11 @@
 >models
 >
 >notebooks
->>exploration.ipnyb
+>>exploration.ipynb
 >
 >src/
 >>\_\_init__.py
-dat_loader.py
+data_loader.py
 models\.py
 visualisation\.py
 >

@@ -54,7 +54,7 @@ class Graph:
             i+=1
         return fig
 
-    def coincidence_values(self, y_predict: pd.DataFrame, y_real: pd.DataFrame) -> matfig.Figure:
+    def prediction_vs_actual(self, y_predict: pd.DataFrame, y_real: pd.DataFrame) -> matfig.Figure:
         from numpy import linspace
         fig, axes = plt.subplots(figsize=(15,15))
         axes.scatter(y_real, y_predict)

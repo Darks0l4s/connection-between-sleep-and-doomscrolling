@@ -1,9 +1,11 @@
 import streamlit as st
 from pandas import DataFrame
 from src.visualization import Graph
-from src.models import LinearML
+from src.models import ModelTrainer
 from matplotlib.figure import Figure
-
+from numpy import ndarray
+import os
+import joblib
 class WindowApp:
     def __init__(self):
         st.set_page_config(page_title='Sleep Analytic')
@@ -13,20 +15,24 @@ class WindowApp:
         st.pyplot(fig)
 
     def print_df(self, df: DataFrame):
-        st.dataframe(df, use_container_width=True)
+        st.dataframe(df, width='stretch')
 
     def print_text(self, text: str):
         st.text(text)
 
-    def render_regression_tab(self, signs: DataFrame, target: DataFrame, model: LinearML, graph: Graph, mode: str):
+    def render_regression_tab(self, signs: DataFrame, target: DataFrame, model: ModelTrainer, graph: Graph, mode: str):
         self.print_text('Linear Regression')
-        signs_column, k, b, mae, mse, r2 = model.train_linear(signs, target, mode='linear')
-        self.print_graph(graph.coef_visual(k, signs_column))
-        text = f'MAE={mae}, MSE={mse}, R2_score={r2}'
+        file_path = f"models/{'regression'}-{mode}-res.pkl"
+        if os.path.exists(file_path):
+            res =joblib.load(file_path)
+        else:
+            res = model.train_linear(signs, target, mode)
+        self.print_graph(graph.coef_visual(res.k, res.signs_column))
+        text = f'MAE={res.mae}, MSE={res.mse}, R2_score={res.r2}'
         self.print_text(text)
-        self.print_graph(graph.coincidence_values(model.y_real, model.y_predict))
+        self.print_graph(graph.prediction_vs_actual(res.y_real, res.y_predict))
 
-    def render_model_selection(self, signs: DataFrame, target: DataFrame, model: LinearML, graph: Graph):
+    def render_model_selection(self, signs: DataFrame, target: DataFrame, model: ModelTrainer, graph: Graph):
 
         st.title('Regression')
         self.print_graph(graph.show_dependence_parameter(signs, target))
@@ -48,15 +54,20 @@ class WindowApp:
         with tab_gradient:
             self.render_regression_tab(signs, target, model, graph, 'gradient')
 
-    def render_classifier_tab(self, signs: DataFrame, target: DataFrame, model: LinearML, graph: Graph, mode: str):
-        importances, accuracy, report, matrix = model.train_classifier(signs, target, mode)
-        st.metric("Accuracy", f"{accuracy * 100:.2f}%")
-        st.write("📊 Detailed report by class:")
-        st.dataframe(report)
-        st.pyplot(graph.coef_visual(importances, signs.columns))
-        self.print_graph(graph.heatmap(matrix))
+    def render_classifier_tab(self, signs: DataFrame, target: DataFrame, model: ModelTrainer, graph: Graph, mode: str):
 
-    def render_classifier(self, signs: DataFrame, target: DataFrame, model: LinearML, graph: Graph):
+        file_path = f"models/{'classifier'}-{mode}-res.pkl"
+        if os.path.exists(file_path):
+            res =joblib.load(file_path)
+        else:
+            res = model.train_classifier(signs, target, mode)
+        st.metric("Accuracy", f"{res.accuracy * 100:.2f}%")
+        st.write("📊 Detailed report by class:")
+        st.dataframe(res.report)
+        st.pyplot(graph.coef_visual(res.importances, signs.columns))
+        self.print_graph(graph.heatmap(res.matrix))
+
+    def render_classifier(self, signs: DataFrame, target: ndarray, model: ModelTrainer, graph: Graph):
         st.title('Classifier')
         tab_logistic, tab_random, tab_histgradient = st.tabs([
                 "LogisticRegression", 

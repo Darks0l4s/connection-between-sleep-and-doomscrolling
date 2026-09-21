@@ -1,10 +1,10 @@
 from app.ui import WindowApp
 import src.data_loader as dl
 from src.visualization import Graph
-from src.models import LinearML
+from src.models import ModelTrainer
 import pandas as pd
 
-def regression_analytics(app: WindowApp, loader: dl.Loader, graph: Graph, model: LinearML):
+def regression_analytics(app: WindowApp, loader: dl.Loader, graph: Graph, model: ModelTrainer):
     features = [
     'bedtime_screen_time_minutes', 'avg_doomscroll_session_minutes', 
     'doomscroll_sessions_per_night', 'phone_checks_per_night',
@@ -17,7 +17,7 @@ def regression_analytics(app: WindowApp, loader: dl.Loader, graph: Graph, model:
     signs = loader.encode_categorical(signs)
     app.render_model_selection(signs, target, model, graph)
 
-def classifier_analytics(app: WindowApp, loader: dl.Loader, graph: Graph, model: LinearML):
+def classifier_analytics(app: WindowApp, loader: dl.Loader, graph: Graph, model: ModelTrainer):
     feature = [
         'age', 'bedtime_screen_time_minutes', 'total_daily_screen_time_hours',
         'doomscroll_sessions_per_night', 'avg_doomscroll_session_minutes',
@@ -32,7 +32,7 @@ def main():
     app = WindowApp()
     loader = dl.Loader()
     graph=Graph()
-    model = LinearML()
+    model = ModelTrainer()
     loader.load_data('data/sleep_doomscrolling_habits.csv')
     df_user = loader.load_user_analytics()
     df = loader.get_df()

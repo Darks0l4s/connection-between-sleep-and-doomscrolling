@@ -34,6 +34,4 @@ class Loader:
     def load_specific_data(self, category: list):
         return self.df_not_nan[category]
     
-
-    
     
