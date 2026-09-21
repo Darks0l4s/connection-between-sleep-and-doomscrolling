@@ -143,3 +143,6 @@ class ModelTrainer:
         scaler = StandardScaler()
         x_scaled = scaler.fit_transform(X)
         return x_scaled
+    @staticmethod
+    def predict_classifier(model, data):
+        return model.predict(data)

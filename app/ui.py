@@ -6,6 +6,7 @@ from matplotlib.figure import Figure
 from numpy import ndarray
 import os
 import joblib
+from src.data_loader import Loader
 class WindowApp:
     def __init__(self):
         st.set_page_config(page_title='Sleep Analytic')
@@ -58,7 +59,7 @@ class WindowApp:
 
         file_path = f"models/{'classifier'}-{mode}-res.pkl"
         if os.path.exists(file_path):
-            res =joblib.load(file_path)
+            res =self.load_model(file_path)
         else:
             res = model.train_classifier(signs, target, mode)
         st.metric("Accuracy", f"{res.accuracy * 100:.2f}%")
@@ -80,3 +81,39 @@ class WindowApp:
             self.render_classifier_tab(signs, target, model, graph, 'random')
         with tab_histgradient:
             self.render_classifier_tab(signs, target, model, graph, 'histgradient')
+
+    def domscraller_test(self):
+        age = st.slider('Age', 0, 100, 18, 1)
+        bedtime_screen_time_minutes = st.slider('Bedtime screen time minutes:',0, 240, 0, 1)
+        total_daily_screen_time_hours = st.slider('Total daily screen time hours',0, 24, 0, 1)
+        doomscroll_sessions_per_night = st.slider('Doomscroll sessions per night',0, 20, 0, 1)
+        avg_doomscroll_session_minutes = st.slider('Avg doomscroll session minutes',0, 240, 0, 1)
+        phone_checks_per_night = st.slider('Phone checks per night',0, 10, 0, 1)
+        keeps_phone_in_bedroom = st.radio('Keeps phone in bedroom',['Yes', 'No'])
+
+        data = DataFrame([{
+            'age': age,
+            'bedtime_screen_time_minutes': bedtime_screen_time_minutes,
+            'total_daily_screen_time_hours': total_daily_screen_time_hours,
+            'doomscroll_sessions_per_night': doomscroll_sessions_per_night,
+            'avg_doomscroll_session_minutes': avg_doomscroll_session_minutes,
+            'phone_checks_per_night': phone_checks_per_night,
+            'keeps_phone_in_bedroom': keeps_phone_in_bedroom
+        }])
+
+
+        mode='logistic'
+        file_path = f"models/{'classifier'}-{mode}-model.pkl"
+        model =joblib.load(file_path)
+        loader =Loader()
+        data =loader.encode_categorical(data)
+        data = data.reindex(
+            columns=model.feature_names_in_,
+            fill_value=0
+        )
+        res=ModelTrainer.predict_classifier(model, data)
+        print(res)
+
+    @st.cache_resource
+    def load_model(path):
+        return joblib.load(path)

@@ -40,7 +40,7 @@ def main():
     app.print_graph(graph.visualization_user_analytics(df_user))
     regression_analytics(app, loader,  graph, model)
     classifier_analytics(app, loader, graph, model)
-
+    app.domscraller_test()
 
 if __name__=='__main__':
     main()
