@@ -295,8 +295,12 @@ docker run -p 8501:8501 sleep-analytics
 
 ## 📸 Скриншоты
 
-![](docs/image.png)
-![](docs/image copy.png)
+![](docs/1.png)
+![](docs/2.png)
+![](docs/3.png)
+![](docs/4.png)
+![](docs/5.png)
+![](docs/6.png)
 ---
 
 ## 📚 Lessons Learned
