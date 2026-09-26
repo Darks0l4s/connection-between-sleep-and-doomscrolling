@@ -5,6 +5,14 @@ from src.models import ModelTrainer
 import pandas as pd
 
 def regression_analytics(app: WindowApp, loader: dl.Loader, graph: Graph, model: ModelTrainer):
+    """Замустить машинное обучение регрессии
+
+    Args:
+        app (WindowApp): Созданное окно streamlit
+        loader (dl.Loader): Созданные загрузчик данных loader
+        graph (Graph): Созданный визулизатор графиок matplotlib
+        model (ModelTrainer): Объект класса для машинного обучения
+    """
     features = [
     'bedtime_screen_time_minutes', 'avg_doomscroll_session_minutes', 
     'doomscroll_sessions_per_night', 'phone_checks_per_night',
@@ -18,17 +26,26 @@ def regression_analytics(app: WindowApp, loader: dl.Loader, graph: Graph, model:
     app.render_model_selection(signs, target, model, graph)
 
 def classifier_analytics(app: WindowApp, loader: dl.Loader, graph: Graph, model: ModelTrainer):
+    """Запустить классификацию
+
+    Args:
+        app (WindowApp): Созданное окно streamlit
+        loader (dl.Loader): Созданные загрузчик данных loader
+        graph (Graph): Созданный визулизатор графиок matplotlib
+        model (ModelTrainer): Объект класса для машинного обучения
+    """
     feature = [
         'age', 'bedtime_screen_time_minutes', 'total_daily_screen_time_hours',
         'doomscroll_sessions_per_night', 'avg_doomscroll_session_minutes',
         'phone_checks_per_night', 'keeps_phone_in_bedroom'
     ]
     signs = loader.load_specific_data(feature)
-    signs = loader.encode_categorical(signs)
     target = loader.load_specific_data(['doomscroller'])
     app.render_classifier(signs, target, model, graph)
 
 def main():
+    """Создание объектов программы
+    """
     app = WindowApp()
     loader = dl.Loader()
     graph=Graph()
@@ -40,8 +57,9 @@ def main():
     app.print_graph(graph.visualization_user_analytics(df_user))
     regression_analytics(app, loader,  graph, model)
     classifier_analytics(app, loader, graph, model)
-    app.doomscraller_test()
+    app.doomscroller_test()
 
 if __name__=='__main__':
+    """Точка входа в программу"""
     main()
 

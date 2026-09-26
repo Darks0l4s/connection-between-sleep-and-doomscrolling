@@ -43,7 +43,14 @@ class WindowApp:
 
     def render_regression_tab(self, signs: DataFrame, target: DataFrame, model: ModelTrainer, graph: Graph, mode: str):
         res, text = cache_render_regression_tab(mode, model, signs, target)
-        self.print_text('Linear Regression')
+        titles = {
+            'linear': 'Linear Regression',
+            'ridge': 'Ridge Regression',
+            'lasso': 'Lasso Regression',
+            'random': 'Random Forest',
+            'gradient': 'Gradient Boosting',
+        }
+        self.print_text(titles.get(mode, 'Model'))
         self.print_graph(graph.coef_visual(res.k, res.signs_column))
         self.print_text(text)
         self.print_graph(graph.prediction_vs_actual(res.y_real, res.y_predict))
@@ -93,7 +100,7 @@ class WindowApp:
             self.render_classifier_tab(signs, target, model, graph, 'histgradient')
 
     @st.fragment
-    def doomscraller_test(self):
+    def doomscroller_test(self):
         st.title('You are doomscraller?')
         with st.container(border=True):
             option = st.selectbox("Select a model for training:",

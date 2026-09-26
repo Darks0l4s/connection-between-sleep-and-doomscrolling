@@ -7,25 +7,9 @@ from sklearn.inspection import permutation_importance
 import pandas as pd
 from numpy import ndarray
 import numpy as np
-from typing import NamedTuple
+from templates.return_data import RegressionResults, ClassiferResults
 import joblib
 import os
-
-class RegressionResults(NamedTuple):
-    signs_column: pd.Index
-    k: ndarray
-    b: float
-    mae: float
-    mse: float
-    r2: float
-    y_predict: float
-    y_real: float
-
-class ClassiferResults(NamedTuple):
-    importances: ndarray
-    accuracy: float
-    report: dict
-    matrix:ndarray
 
 class ModelTrainer:
     
@@ -96,6 +80,7 @@ class ModelTrainer:
     def train_classifier(self, signs: pd.DataFrame, target: ndarray, mode: str) -> ClassiferResults:
         if hasattr(target, 'values'):
             target = target.values.ravel()
+        signs = pd.get_dummies(signs, drop_first=True)
         match mode:
             case 'logistic':
                 model = LogisticRegression(max_iter=1000, random_state=42)

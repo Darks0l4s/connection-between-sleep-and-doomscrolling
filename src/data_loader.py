@@ -3,17 +3,40 @@ import pandas as pd
 
 class Loader:
     def __init__(self):
+        """Инициализация класса и базовая настройка
+        """
         self.df = pd.DataFrame()
         self.df_not_nan =pd.DataFrame()
 
     def encode_categorical(self, old_df: pd.DataFrame) -> pd.DataFrame:
+        """Перевод категорий данных str, bool в числовые признаки
+
+        Args:
+            old_df (pd.DataFrame): Старый DataFrame
+
+        Returns:
+            pd.DataFrame: Обработанный DataFrame
+        """
         return pd.get_dummies(old_df, drop_first=True)
 
     def delete_nan(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Удалить пропуски в DataFrame
+
+        Args:
+            old_df (pd.DataFrame): Старый DataFrame
+
+        Returns:
+            pd.DataFrame: Обработанный DataFrame
+"""
         new_df=df.dropna()
         return new_df
     
     def load_data(self, path: str):
+        """Загрузка данных из .csv
+
+        Args:
+            path (str): Путь к файлу
+        """
         try:
             self.df = pd.read_csv(path)
             print(self.df.head(5))
@@ -22,16 +45,34 @@ class Loader:
             print('File not found')
 
     def get_df(self) -> pd.DataFrame:
+        """Получить весь DataFrame
+
+        Returns:
+            pd.DataFrame: Возращение всего DataFrame
+        """
         return self.df
 
     
 
     def load_user_analytics(self) -> pd.DataFrame:
+        """Выгрузить данные данных пользователей
+
+        Returns:
+            pd.DataFrame: Все данные о пользовотелях
+        """
         df_user = self.df[['age', 'gender', 'occupation_status', 'country_region', 'primary_device_used_at_night', 'uses_night_mode', 'keeps_phone_in_bedroom', 'consumes_negative_news_content', 'uses_sleep_tracking_app', 'doomscroller']]
         df_user=self.delete_nan(df_user)
         return df_user
     
     def load_specific_data(self, category: list):
+        """Выгрузка определённых колонок
+
+        Args:
+            category (list): Названия колонок
+
+        Returns:
+            _type_: DataFrame с нужными колонками
+        """
         return self.df_not_nan[category]
     
     
