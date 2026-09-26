@@ -295,14 +295,7 @@ docker run -p 8501:8501 sleep-analytics
 
 ## 📸 Скриншоты
 
-> 💡 Добавь свои скриншоты в `docs/` и вставь сюда:
-
-| Вкладка | Скриншот |
-|---------|----------|
-| User Analytics | ![analytics](docs/analytics.png) |
-| Regression | ![regression](docs/regression.png) |
-| Classifier | ![classifier](docs/classifier.png) |
-| Ты думскроллер? | ![test](docs/test.png) |
+docs/image.png
 
 ---
 
@@ -350,26 +343,6 @@ docker run -p 8501:8501 sleep-analytics
 
 ---
 
-## 🤝 Вклад в проект
-
-Pull requests приветствуются! Для крупных изменений сначала открой issue, чтобы обсудить, что именно ты хочешь изменить.
-
-1. Fork репозитория
-2. Создай feature-ветку:
-   ```bash
-   git checkout -b feature/amazing-feature
-   ```
-3. Commit изменений:
-   ```bash
-   git commit -m 'Add amazing feature'
-   ```
-4. Push в ветку:
-   ```bash
-   git push origin feature/amazing-feature
-   ```
-5. Открой Pull Request
-
----
 
 ## 📄 Лицензия
 
@@ -381,7 +354,7 @@ Pull requests приветствуются! Для крупных изменен
 
 ## 👤 Автор
 
-**Твоё Имя** — [@Darks0l4s](https://github.com/Darks0l4s)
+**Сергей** — [@Darks0l4s](https://github.com/Darks0l4s)
 
 Проект создан как pet-проект для портфолио. Буду рад фидбеку! ⭐
 
