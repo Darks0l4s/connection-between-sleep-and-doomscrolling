@@ -1,92 +1,114 @@
-================================================================================
-  SLEEP & DOOMSCROLLING ANALYTICS
-================================================================================
+<div align="center">
 
-Интерактивное веб-приложение для анализа привычек, связанных со сном
-и думскроллингом. Проект позволяет исследовать датасет, обучать ML-модели
-(регрессия и классификация) и в интерактивной форме проверить,
-являетесь ли вы думскроллером.
+# 😴 Sleep & Doomscrolling Analytics
 
-Badges:
-  - Python 3.12
-  - Streamlit 1.x
-  - scikit-learn 1.x
-  - License: MIT
+**Интерактивное веб-приложение для анализа привычек сна и думскроллинга**
 
---------------------------------------------------------------------------------
-  1. О ПРОЕКТЕ
---------------------------------------------------------------------------------
+[![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.x-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-1.x-F7931E?logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![pandas](https://img.shields.io/badge/pandas-2.x-150458?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Sleep & Doomscrolling Analytics — это pet-проект, демонстрирующий полный
-цикл работы с данными:
+[Возможности](#-возможности) •
+[Быстрый старт](#-быстрый-старт) •
+[Структура](#-структура-проекта) •
+[Тесты](#-тестирование) •
+[Roadmap](#-roadmap)
 
-  * Загрузка и предобработка CSV-датасета
-  * Визуализация пользовательской аналитики (пол, возраст, регион,
-    род занятий)
-  * Обучение моделей РЕГРЕССИИ (предсказание часов сна)
-    и КЛАССИФИКАЦИИ (является ли пользователь думскроллером)
-  * Покрытие ключевой логики unit-тестами (pytest)
-  * Интерактивный тест "Ты думскроллер?" на основе обученной модели
+</div>
 
-Датасет:
-  Sleep and Doomscrolling Habits Dataset (Kaggle)
-  https://www.kaggle.com/datasets/harpartapsingh13/sleep-and-doomscrolling-habits-dataset
+---
 
---------------------------------------------------------------------------------
-  2. БЫСТРЫЙ СТАРТ
---------------------------------------------------------------------------------
+## 📖 О проекте
 
-Шаг 1. Клонировать репозиторий
---------------------------------
-  git clone https://github.com/your-username/sleep-doomscrolling-analytics.git
-  cd sleep-doomscrolling-analytics
+**Sleep & Doomscrolling Analytics** — это pet-проект, демонстрирующий полный цикл работы с данными: от загрузки CSV до интерактивного ML-приложения.
 
-Шаг 2. Создать виртуальное окружение
--------------------------------------
-Linux / macOS:
-  python3 -m venv SleepVenv
-  source SleepVenv/bin/activate
+- 📥 Загрузка и предобработка CSV-датасета
+- 📊 Визуализация пользовательской аналитики (пол, возраст, регион, род занятий)
+- 🤖 Обучение моделей **регрессии** (предсказание часов сна) и **классификации** (является ли пользователь думскроллером)
+- 🧪 Покрытие ключевой логики unit-тестами (pytest)
+- 🎯 Интерактивный тест **«Ты думскроллер?»** на основе обученной модели
 
-Windows (PowerShell):
-  python -m venv SleepVenv
-  .\SleepVenv\Scripts\Activate.ps1
+> **Датасет:** [Sleep and Doomscrolling Habits Dataset](https://www.kaggle.com/datasets/harpartapsingh13/sleep-and-doomscrolling-habits-dataset) (Kaggle)
 
-Шаг 3. Установить зависимости
------------------------------
-  pip install --upgrade pip
-  pip install -r requirements.txt
+---
 
-Шаг 4. Запустить приложение
----------------------------
-  streamlit run main.py
+## 🚀 Быстрый старт
 
-Открой в браузере: http://localhost:8501
+### 1. Клонировать репозиторий
 
---------------------------------------------------------------------------------
-  3. СТЕК ТЕХНОЛОГИЙ
---------------------------------------------------------------------------------
+```bash
+git clone https://github.com/your-username/sleep-doomscrolling-analytics.git
+cd sleep-doomscrolling-analytics
+```
 
-  Категория         | Технологии
-  ------------------|----------------------------------------------------------
-  Язык              | Python 3.12
-  ML                | scikit-learn (LinearRegression, Ridge, Lasso,
-                    |   RandomForest, GradientBoosting,
-                    |   LogisticRegression, HistGradientBoosting)
-  Данные            | pandas, numpy
-  Визуализация      | matplotlib, seaborn
-  UI                | Streamlit
-  Сериализация      | joblib
-  Тесты             | pytest, pytest-cov
+### 2. Установить окружение одной командой
 
---------------------------------------------------------------------------------
-  4. СТРУКТУРА ПРОЕКТА
---------------------------------------------------------------------------------
+```bash
+chmod +x install.sh
+./install.sh
+```
 
+Скрипт `install.sh` автоматически:
+
+1. ✅ Проверит наличие Python 3.10+
+2. 📦 Создаст виртуальное окружение `SleepVenv`
+3. 🔌 Активирует его
+4. ⬆️ Обновит `pip`
+5. 📥 Установит зависимости из `requirements.txt`
+
+### 3. Запустить приложение
+
+```bash
+./start.sh
+```
+
+Или вручную:
+
+```bash
+source SleepVenv/bin/activate
+streamlit run main.py
+```
+
+Открой в браузере 👉 **[http://localhost:8501](http://localhost:8501)**
+
+### 4. Запустить тесты
+
+```bash
+source SleepVenv/bin/activate
+pytest tests/ -v
+```
+
+С покрытием:
+
+```bash
+pytest tests/ --cov=src --cov=app --cov-report=term-missing
+```
+
+---
+
+## 🛠 Стек технологий
+
+| Категория | Технологии |
+|-----------|-----------|
+| **Язык** | Python 3.12 |
+| **ML** | scikit-learn (LinearRegression, Ridge, Lasso, RandomForest, GradientBoosting, LogisticRegression, HistGradientBoosting) |
+| **Данные** | pandas, numpy |
+| **Визуализация** | matplotlib, seaborn |
+| **UI** | Streamlit |
+| **Сериализация** | joblib |
+| **Тесты** | pytest, pytest-cov |
+
+---
+
+## 📁 Структура проекта
+
+```
 Sleep/
 ├── app/                        # Streamlit UI
 │   ├── __init__.py
-│   └── ui.py                   # WindowApp — рендеринг вкладок,
-│                               #   тест "Ты думскроллер?"
+│   └── ui.py                   # WindowApp — рендеринг вкладок, тест «Ты думскроллер?»
 │
 ├── data/                       # Датасет
 │   └── sleep_doomscrolling_habits.csv
@@ -116,192 +138,261 @@ Sleep/
 │
 ├── main.py                     # Точка входа
 ├── requirements.txt            # Зависимости
+├── install.sh                  # Скрипт установки окружения
+├── start.sh                    # Скрипт запуска приложения
 ├── pytest.ini                  # Конфигурация pytest
-├── Makefile                    # Команды: setup, run, test, lint, clean
-├── setup.sh                    # Скрипт установки (Linux/macOS)
-├── start.sh                    # Скрипт запуска
-└── README.txt                  # Этот файл
+└── README.md
+```
 
---------------------------------------------------------------------------------
-  5. ВОЗМОЖНОСТИ ПРИЛОЖЕНИЯ
---------------------------------------------------------------------------------
+---
 
-5.1. Вкладка "User Analytics"
------------------------------
-  * Распределение пользователей по полу
-  * Возрастная аналитика
-  * Распределение по роду занятий
-  * География (страны/регионы)
+## 🎯 Возможности
 
-5.2. Вкладка "Regression"
--------------------------
-Обучение и сравнение 5 моделей регрессии для предсказания
-sleep_hours_per_night:
+### 📊 Вкладка «User Analytics»
 
-  Модель                | Описание
-  ----------------------|---------------------------------------------------
-  Linear Regression     | Базовая линейная модель
-  Ridge                 | L2-регуляризация
-  Lasso                 | L1-регуляризация
-  Random Forest         | Ансамбль деревьев
-  Gradient Boosting     | Градиентный бустинг
+- Распределение пользователей по полу
+- Возрастная аналитика
+- Распределение по роду занятий
+- География (страны/регионы)
+
+### 📈 Вкладка «Regression»
+
+Обучение и сравнение **5 моделей регрессии** для предсказания `sleep_hours_per_night`:
+
+| Модель | Описание |
+|--------|----------|
+| 📈 Linear Regression | Базовая линейная модель |
+| 🛡️ Ridge | L2-регуляризация |
+| 🎯 Lasso | L1-регуляризация |
+| 🌲 Random Forest | Ансамбль деревьев |
+| ⚡ Gradient Boosting | Градиентный бустинг |
 
 Для каждой модели выводится:
-  * Коэффициенты / важности признаков
-  * MAE, MSE, R^2
-  * График "предсказание vs реальность"
 
-5.3. Вкладка "Classifier"
--------------------------
-Обучение и сравнение 3 моделей классификации для предсказания
-doomscroller:
+- Коэффициенты / важности признаков
+- MAE, MSE, R²
+- График «предсказание vs реальность»
 
-  Модель                     | Описание
-  ---------------------------|----------------------------------------------
-  Logistic Regression        | Линейный классификатор
-  Random Forest              | Ансамбль деревьев
-  HistGradientBoosting       | Быстрый градиентный бустинг
+### 🎯 Вкладка «Classifier»
+
+Обучение и сравнение **3 моделей классификации** для предсказания `doomscroller`:
+
+| Модель | Описание |
+|--------|----------|
+| 📉 Logistic Regression | Линейный классификатор |
+| 🌲 Random Forest | Ансамбль деревьев |
+| ⚡ HistGradientBoosting | Быстрый градиентный бустинг |
 
 Для каждой модели выводится:
-  * Accuracy
-  * Classification report (precision, recall, f1-score)
-  * Confusion matrix (heatmap)
-  * Важности признаков
 
-5.4. Вкладка "Ты думскроллер?"
------------------------------
-Интерактивная форма, где вы вводите свои привычки (возраст, экранное
-время, количество проверок телефона и т.д.), а модель предсказывает,
-являетесь ли вы думскроллером.
+- Accuracy
+- Classification report (precision, recall, f1-score)
+- Confusion matrix (heatmap)
+- Важности признаков
 
---------------------------------------------------------------------------------
-  6. ТЕСТИРОВАНИЕ
---------------------------------------------------------------------------------
+### 🧪 Вкладка «Ты думскроллер?»
 
-Запуск тестов:
-  pytest tests/ -v
+Интерактивная форма, где вы вводите свои привычки (возраст, экранное время, количество проверок телефона и т.д.), а модель предсказывает, являетесь ли вы думскроллером.
+
+---
+
+## 🔧 Скрипты
+
+| Файл | Назначение |
+|------|-----------|
+| 🛠️ `install.sh` | Создаёт venv и устанавливает зависимости |
+| 🚀 `start.sh` | Активирует venv и запускает Streamlit |
+| 📋 `requirements.txt` | Список зависимостей проекта |
+| ⚙️ `pytest.ini` | Конфигурация pytest |
+
+### `install.sh`
+
+```bash
+#!/bin/bash
+set -e
+
+VENV_DIR="SleepVenv"
+PYTHON=${PYTHON:-python3}
+
+if ! command -v "$PYTHON" &> /dev/null; then
+    echo "❌ Python не найден. Установи Python 3.10+."
+    exit 1
+fi
+
+if [ ! -d "$VENV_DIR" ]; then
+    "$PYTHON" -m venv "$VENV_DIR"
+fi
+
+source "$VENV_DIR/bin/activate"
+pip install --upgrade pip
+pip install -r requirements.txt
+
+echo "✅ Готово. Активируй: source $VENV_DIR/bin/activate"
+```
+
+### `start.sh`
+
+```bash
+#!/bin/bash
+source SleepVenv/bin/activate
+streamlit run main.py --server.headless true
+```
+
+---
+
+## 🧪 Тестирование
+
+```bash
+pytest tests/ -v
+```
 
 С покрытием:
-  pytest tests/ --cov=src --cov=app --cov-report=term-missing
+
+```bash
+pytest tests/ --cov=src --cov=app --cov-report=term-missing
+```
 
 Пример вывода:
-  tests/test_data_loader.py ................ [ 19%]
-  tests/test_models.py .................... [ 87%]
-  tests/test_visualization.py ............. [100%]
 
-  ---------- coverage ----------
-  Name                   Stmts   Miss  Cover
-  ------------------------------------------
-  src/data_loader.py        26      0   100%
-  src/models.py             97     19    80%
-  src/visualization.py      66     12    82%
-  ------------------------------------------
-  TOTAL                    296    138    53%
+```
+tests/test_data_loader.py ................ [ 19%]
+tests/test_models.py .................... [ 87%]
+tests/test_visualization.py ............. [100%]
 
---------------------------------------------------------------------------------
-  7. MAKEFILE (ОПЦИОНАЛЬНО)
---------------------------------------------------------------------------------
+---------- coverage ----------
+Name                   Stmts   Miss  Cover
+------------------------------------------
+src/data_loader.py        26      0   100%
+src/models.py             97     19    80%
+src/visualization.py      66     12    82%
+------------------------------------------
+TOTAL                    296    138    53%
+```
 
-Для удобства разработки:
+---
 
-  make setup   # создать venv и установить зависимости
-  make run     # запустить Streamlit
-  make test    # запустить тесты с покрытием
-  make lint    # проверить стиль (flake8)
-  make clean   # удалить venv, модели, кэш
+## 🐳 Docker (опционально)
 
---------------------------------------------------------------------------------
-  8. СКРИНШОТЫ
---------------------------------------------------------------------------------
+Если хочешь запустить в контейнере:
 
-Добавь свои скриншоты сюда. Пример:
+```dockerfile
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+CMD ["streamlit", "run", "main.py", "--server.headless", "true", "--server.port=8501", "--server.address=0.0.0.0"]
+```
 
-  Вкладка            | Скриншот
-  -------------------|-------------------------------------------------------
-  User Analytics     | docs/analytics.png
-  Regression         | docs/regression.png
-  Classifier         | docs/classifier.png
-  Ты думскроллер?    | docs/test.png
+Сборка и запуск:
 
---------------------------------------------------------------------------------
-  9. LESSONS LEARNED
---------------------------------------------------------------------------------
+```bash
+docker build -t sleep-analytics .
+docker run -p 8501:8501 sleep-analytics
+```
 
-В процессе разработки были найдены и исправлены классические ошибки
-ML-пайплайнов:
+---
 
-1) ValueError: could not convert string to float: 'No'
-   Причина: категориальные признаки (Yes/No) не были закодированы перед
-   подачей в LogisticRegression.
-   Решение: применять pd.get_dummies на уровне Loader, а не внутри модели.
+## 📸 Скриншоты
 
-2) ValueError: The least populated classes in y have only 1 member
-   Причина: в тестовой фикстуре для классификации использовался
-   непрерывный target вместо бинарного.
-   Решение: генерировать np.random.choice(['Yes', 'No'], n) в conftest.py.
+> 💡 Добавь свои скриншоты в `docs/` и вставь сюда:
 
-3) Дублирование get_dummies
-   Причина: train_linear и train_classifier вызывались с уже
-   закодированными данными, но train_linear делал кодирование повторно.
-   Решение: вынести препроцессинг на уровень выше (в main.py).
+| Вкладка | Скриншот |
+|---------|----------|
+| User Analytics | ![analytics](docs/analytics.png) |
+| Regression | ![regression](docs/regression.png) |
+| Classifier | ![classifier](docs/classifier.png) |
+| Ты думскроллер? | ![test](docs/test.png) |
 
-Подробнее — в notebooks/exploration.ipynb.
+---
 
---------------------------------------------------------------------------------
-  10. ROADMAP
---------------------------------------------------------------------------------
+## 📚 Lessons Learned
 
-  [x] Базовая структура проекта
-  [x] Загрузка и предобработка данных
-  [x] Регрессия (5 моделей)
-  [x] Классификация (3 модели)
-  [x] Кэширование моделей и результатов
-  [x] Интерактивный тест "Ты думскроллер?"
-  [x] Unit-тесты (pytest)
-  [ ] CI через GitHub Actions
-  [ ] Docker-образ
-  [ ] Feature engineering (screen_time_ratio, doomscroll_total)
-  [ ] Деплой на Streamlit Cloud
-  [ ] MLflow для трекинга экспериментов
+В процессе разработки были найдены и исправлены классические ошибки ML-пайплайнов:
 
---------------------------------------------------------------------------------
-  11. ВКЛАД В ПРОЕКТ
---------------------------------------------------------------------------------
+### 1. `ValueError: could not convert string to float: 'No'`
 
-Pull requests приветствуются! Для крупных изменений сначала открой
-issue, чтобы обсудить, что именно ты хочешь изменить.
+**Причина:** категориальные признаки (`Yes`/`No`) не были закодированы перед подачей в `LogisticRegression`.
 
-  1. Fork репозитория
-  2. Создай feature-ветку
-     (git checkout -b feature/amazing-feature)
-  3. Commit изменений
-     (git commit -m 'Add amazing feature')
-  4. Push в ветку
-     (git push origin feature/amazing-feature)
-  5. Открой Pull Request
+**Решение:** применять `pd.get_dummies` на уровне `Loader`, а не внутри модели.
 
---------------------------------------------------------------------------------
-  12. ЛИЦЕНЗИЯ
---------------------------------------------------------------------------------
+### 2. `ValueError: The least populated classes in y have only 1 member`
 
-Распространяется под лицензией MIT. См. LICENSE для деталей.
+**Причина:** в тестовой фикстуре для классификации использовался непрерывный target вместо бинарного.
 
---------------------------------------------------------------------------------
-  13. АВТОР
---------------------------------------------------------------------------------
+**Решение:** генерировать `np.random.choice(['Yes', 'No'], n)` в `conftest.py`.
 
-Твоё Имя — @your-username (https://github.com/your-username)
+### 3. Дублирование `get_dummies`
 
-Проект создан как pet-проект для портфолио. Буду рад фидбеку!
+**Причина:** `train_linear` и `train_classifier` вызывались с уже закодированными данными, но `train_linear` делал кодирование повторно.
 
---------------------------------------------------------------------------------
-  14. БЛАГОДАРНОСТИ
---------------------------------------------------------------------------------
+**Решение:** вынести препроцессинг на уровень `main.py`.
 
-  * Kaggle (https://www.kaggle.com/) — за датасет
-  * Streamlit (https://streamlit.io/) — за простой способ сделать UI
-  * scikit-learn (https://scikit-learn.org/) — за мощные ML-инструменты
+> 📓 Подробнее — в `notebooks/exploration.ipynb`
 
-================================================================================
-  Конец файла
-================================================================================
+---
+
+## 🗺 Roadmap
+
+- [x] Базовая структура проекта
+- [x] Загрузка и предобработка данных
+- [x] Регрессия (5 моделей)
+- [x] Классификация (3 модели)
+- [x] Кэширование моделей и результатов
+- [x] Интерактивный тест «Ты думскроллер?»
+- [x] Unit-тесты (pytest)
+- [x] `install.sh` для автоматизации setup
+- [ ] CI через GitHub Actions
+- [ ] Docker-образ
+- [ ] Feature engineering (`screen_time_ratio`, `doomscroll_total`)
+- [ ] Деплой на Streamlit Cloud
+- [ ] MLflow для трекинга экспериментов
+
+---
+
+## 🤝 Вклад в проект
+
+Pull requests приветствуются! Для крупных изменений сначала открой issue, чтобы обсудить, что именно ты хочешь изменить.
+
+1. Fork репозитория
+2. Создай feature-ветку:
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+3. Commit изменений:
+   ```bash
+   git commit -m 'Add amazing feature'
+   ```
+4. Push в ветку:
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+5. Открой Pull Request
+
+---
+
+## 📄 Лицензия
+
+Распространяется под лицензией **MIT**. См. `LICENSE` для деталей.
+
+---
+
+<div align="center">
+
+## 👤 Автор
+
+**Твоё Имя** — [@Darks0l4s](https://github.com/Darks0l4s)
+
+Проект создан как pet-проект для портфолио. Буду рад фидбеку! ⭐
+
+---
+
+## ⭐ Благодарности
+
+[Kaggle](https://www.kaggle.com/) • [Streamlit](https://streamlit.io/) • [scikit-learn](https://scikit-learn.org/)
+
+---
+
+**Если проект был полезен — поставь ⭐ на GitHub!**
+
+</div>
